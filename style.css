@@ -1,0 +1,8 @@
+.completed {
+    text-decoration: line-through;
+    /* background-color: red; */
+}
+
+.active {
+    text-decoration: none;
+}
