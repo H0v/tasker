@@ -6,3 +6,7 @@
 .active {
     text-decoration: none;
 }
+
+.taskbox {
+    display: flex;
+}

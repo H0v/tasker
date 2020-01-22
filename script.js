@@ -1,5 +1,6 @@
 let addbutton = document.querySelector(".addbutton");
 let input = document.querySelector(".input");
+input.focus();
 let ul = document.querySelector("ul");
 
 if(localStorage.length != 0 && localStorage.getItem("active").length > 0){
@@ -36,7 +37,7 @@ for(let i = 0; i < ul.children.length; i++){
   });
   
     ul.children[i].addEventListener("dblclick",function(event){
-      debugger;
+      // debugger;
       let element = event.target.closest("div");
       if(element.className != "editing"){
         let value = element.innerText;
@@ -46,17 +47,30 @@ for(let i = 0; i < ul.children.length; i++){
         changingInput.value = value;
         element.closest(".editing").appendChild(changingInput);
         element.remove();
-        // changingInput.addEventListener("click",function(){
-        //   if (event.keyCode === 13) {
-        //     let x = JSON.parse(localStorage.getItem("active"));
-        //     let c = x.filter(e=> e.id === event.target.closest("div").id && e.completed === false)[0];
-        //     c.title = changingInput.value;
-        //     localStorage.setItem("active",JSON.stringify(x));
-        //   }
-        // });
+        changingInput.focus();
+        changingInput.addEventListener("keyup",function(event){
+          if (event.keyCode === 13) {
+            debugger;
+            let x = JSON.parse(localStorage.getItem("active"));
+            let c = x.filter(e=> e.title === value)[0];
+            c.title = changingInput.value;
+            localStorage.setItem("active",JSON.stringify(x));
+            let div = document.createElement("div");
+            c.className === true ? div.className = "completed" : div.className = "active" ;;
+            div.id = c.id;
+            div.innerText = changingInput.value;
+            changingInput.after(div);
+            // changingInput.closest(".editing").className = "taskBox";
+            changingInput.parentNode.className = "taskBox";
+            changingInput.remove();
+            // location = location;
+          }
+        });
+
       }
     
     
+      
 
   });
 
@@ -93,6 +107,7 @@ function addList(value,id, completed = false){
   let li = document.createElement("li");
   let div = document.createElement("div");
   let div2 = document.createElement("div");
+  let div3 = document.createElement("div");
   completed === true ? div.className = "completed" : div.className = "active" ;
   div.id = id;
   li.id = id;
